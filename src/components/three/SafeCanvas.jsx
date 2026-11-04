@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, Component } from 'react';
 import { Canvas, events } from '@react-three/fiber';
 
 export function createSafeEvents(store) {
@@ -28,15 +28,54 @@ export function createSafeEvents(store) {
   return pe;
 }
 
-export const SafeCanvas = forwardRef(({ events: customEvents, children, ...props }, ref) => {
+export class CanvasErrorBoundary extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false, error: null };
+  }
+
+  static getDerivedStateFromError(error) {
+    return { hasError: true, error };
+  }
+
+  componentDidCatch(error, errorInfo) {
+    console.warn('WebGL / 3D Canvas error safely caught:', error, errorInfo);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      if (this.props.fallback) {
+        return this.props.fallback;
+      }
+      return (
+        <div className="w-full h-full min-h-[280px] flex flex-col items-center justify-center p-6 text-center bg-slate-950/70 rounded-2xl border border-white/10 font-mono">
+          <div className="w-10 h-10 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 mb-2">
+            <span className="text-base font-bold">3D</span>
+          </div>
+          <span className="text-xs uppercase font-bold text-cyan-400 mb-1">
+            WebGL Acceleration Offline
+          </span>
+          <p className="text-[11px] text-slate-400 max-w-xs leading-relaxed">
+            Hardware acceleration is inactive or unsupported on this device. Displaying 2D holographic data.
+          </p>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
+
+export const SafeCanvas = forwardRef(({ events: customEvents, fallback, children, ...props }, ref) => {
   return (
-    <Canvas
-      ref={ref}
-      events={customEvents || createSafeEvents}
-      {...props}
-    >
-      {children}
-    </Canvas>
+    <CanvasErrorBoundary fallback={fallback}>
+      <Canvas
+        ref={ref}
+        events={customEvents || createSafeEvents}
+        {...props}
+      >
+        {children}
+      </Canvas>
+    </CanvasErrorBoundary>
   );
 });
 
