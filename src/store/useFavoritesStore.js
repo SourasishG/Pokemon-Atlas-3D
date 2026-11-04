@@ -1,5 +1,5 @@
-import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
 export const useFavoritesStore = create(
   persist(
@@ -33,7 +33,7 @@ export const useFavoritesStore = create(
       clearFavorites: () => set({ favorites: [] }),
     }),
     {
-      name: 'pokemon-atlas-favorites',
-    }
-  )
+      name: "pokemon-atlas-favorites",
+    },
+  ),
 );

@@ -1,6 +1,6 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { Shield, Sparkles, Cpu, Github, ExternalLink } from 'lucide-react';
+import React from "react";
+import { Link } from "react-router-dom";
+import { Shield, Sparkles, Cpu, Github, ExternalLink } from "lucide-react";
 
 export default function Footer() {
   return (
@@ -19,7 +19,8 @@ export default function Footer() {
               </span>
             </div>
             <p className="text-sm text-slate-400 leading-relaxed max-w-md">
-              A high-fidelity 3D Pokémon exploration, comparison, and competitive team analysis platform powered by PokéAPI and WebGL.
+              A high-fidelity 3D Pokémon exploration, comparison, and
+              competitive team analysis platform powered by PokéAPI and WebGL.
             </p>
             <div className="flex items-center gap-2 text-[11px] font-mono uppercase text-cyan-400">
               <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
@@ -34,19 +35,38 @@ export default function Footer() {
             </h4>
             <ul className="space-y-2 text-sm font-medium">
               <li>
-                <Link to="/" className="hover:text-white transition-colors">Home Landing</Link>
+                <Link to="/" className="hover:text-white transition-colors">
+                  Home Landing
+                </Link>
               </li>
               <li>
-                <Link to="/pokedex" className="hover:text-white transition-colors">Pokédex Explorer</Link>
+                <Link
+                  to="/pokedex"
+                  className="hover:text-white transition-colors"
+                >
+                  Pokédex Explorer
+                </Link>
               </li>
               <li>
-                <Link to="/team" className="hover:text-white transition-colors">Team Analyzer</Link>
+                <Link to="/team" className="hover:text-white transition-colors">
+                  Team Analyzer
+                </Link>
               </li>
               <li>
-                <Link to="/compare" className="hover:text-white transition-colors">Comparison Lab</Link>
+                <Link
+                  to="/compare"
+                  className="hover:text-white transition-colors"
+                >
+                  Comparison Lab
+                </Link>
               </li>
               <li>
-                <Link to="/favorites" className="hover:text-white transition-colors">Saved Favorites</Link>
+                <Link
+                  to="/favorites"
+                  className="hover:text-white transition-colors"
+                >
+                  Saved Favorites
+                </Link>
               </li>
             </ul>
           </div>
@@ -67,9 +87,14 @@ export default function Footer() {
         </div>
 
         <div className="pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
-          <p>© 2026 Pokémon Atlas 3D. Pokémon and Pokémon character names are trademarks of Nintendo.</p>
+          <p>
+            © 2026 Pokémon Atlas 3D. Pokémon and Pokémon character names are
+            trademarks of Nintendo.
+          </p>
           <div className="flex items-center gap-4">
-            <span className="font-mono text-[10px] uppercase text-slate-400">COORD: 45.32 // -122.9</span>
+            <span className="font-mono text-[10px] uppercase text-slate-400">
+              COORD: 45.32 // -122.9
+            </span>
           </div>
         </div>
       </div>

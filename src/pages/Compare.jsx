@@ -1,16 +1,16 @@
-import React, { useState } from 'react';
-import { Scale, Sparkles, ArrowRightLeft } from 'lucide-react';
-import CompareCard from '../components/compare/CompareCard';
-import PokemonSelectModal from '../components/pokemon/PokemonSelectModal';
-import { useCompareStore } from '../store/useCompareStore';
-import { usePokemonStore } from '../store/usePokemonStore';
-import { getPokemon } from '../services/pokeapi';
+import React, { useState } from "react";
+import { Scale, Sparkles, ArrowRightLeft } from "lucide-react";
+import CompareCard from "../components/compare/CompareCard";
+import PokemonSelectModal from "../components/pokemon/PokemonSelectModal";
+import { useCompareStore } from "../store/useCompareStore";
+import { usePokemonStore } from "../store/usePokemonStore";
+import { getPokemon } from "../services/pokeapi";
 
 const RIVALRY_PAIRS = [
-  { name: 'Charizard vs Blastoise', pair: ['charizard', 'blastoise'] },
-  { name: 'Mewtwo vs Mew', pair: ['mewtwo', 'mew'] },
-  { name: 'Lucario vs Gengar', pair: ['lucario', 'gengar'] },
-  { name: 'Koraidon vs Miraidon', pair: ['koraidon', 'miraidon'] },
+  { name: "Charizard vs Blastoise", pair: ["charizard", "blastoise"] },
+  { name: "Mewtwo vs Mew", pair: ["mewtwo", "mew"] },
+  { name: "Lucario vs Gengar", pair: ["lucario", "gengar"] },
+  { name: "Koraidon vs Miraidon", pair: ["koraidon", "miraidon"] },
 ];
 
 export default function Compare() {
@@ -31,24 +31,33 @@ export default function Compare() {
   const [loadingPair, setLoadingPair] = useState(false);
 
   const handleSelectPokemon = (pokemon) => {
-    if (activeTargetSlot === 'A') {
+    if (activeTargetSlot === "A") {
       setSlotA(pokemon);
     } else {
       setSlotB(pokemon);
     }
-    showToast(`Assigned ${pokemon.displayName} to Slot ${activeTargetSlot}`, 'success');
+    showToast(
+      `Assigned ${pokemon.displayName} to Slot ${activeTargetSlot}`,
+      "success",
+    );
   };
 
   const handleLoadPair = async (pair) => {
     setLoadingPair(true);
     try {
-      const [pkmnA, pkmnB] = await Promise.all([getPokemon(pair[0]), getPokemon(pair[1])]);
+      const [pkmnA, pkmnB] = await Promise.all([
+        getPokemon(pair[0]),
+        getPokemon(pair[1]),
+      ]);
       if (pkmnA) setSlotA(pkmnA);
       if (pkmnB) setSlotB(pkmnB);
-      showToast(`Loaded rivalry specs: ${pkmnA?.displayName} vs ${pkmnB?.displayName}`, 'success');
+      showToast(
+        `Loaded rivalry specs: ${pkmnA?.displayName} vs ${pkmnB?.displayName}`,
+        "success",
+      );
     } catch (err) {
       console.error(err);
-      showToast('Failed to load rivalry comparison', 'error');
+      showToast("Failed to load rivalry comparison", "error");
     } finally {
       setLoadingPair(false);
     }
@@ -90,8 +99,8 @@ export default function Compare() {
       <CompareCard
         slotA={slotA}
         slotB={slotB}
-        onSelectA={() => openSelectionModal('A')}
-        onSelectB={() => openSelectionModal('B')}
+        onSelectA={() => openSelectionModal("A")}
+        onSelectB={() => openSelectionModal("B")}
         onSwap={swapSlots}
         onReset={clearCompare}
       />

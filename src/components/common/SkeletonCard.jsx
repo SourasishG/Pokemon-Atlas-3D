@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 export function SkeletonCard() {
   return (
@@ -47,4 +47,3 @@ export function SkeletonGrid({ count = 8 }) {
 }
 
 export default SkeletonCard;
-

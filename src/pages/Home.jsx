@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { motion } from 'motion/react';
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { motion } from "motion/react";
 import {
   Compass,
   Shield,
@@ -13,16 +13,23 @@ import {
   Database,
   Flame,
   Zap,
-} from 'lucide-react';
-import HeroBallScene from '../components/three/HeroBallScene';
-import PokemonCard from '../components/pokemon/PokemonCard';
-import SkeletonCard from '../components/common/SkeletonCard';
-import { getPokemon } from '../services/pokeapi';
+} from "lucide-react";
+import HeroBallScene from "../components/three/HeroBallScene";
+import PokemonCard from "../components/pokemon/PokemonCard";
+import SkeletonCard from "../components/common/SkeletonCard";
+import { getPokemon } from "../services/pokeapi";
 
-const FEATURED_NAMES = ['rayquaza', 'mewtwo', 'lucario', 'charizard', 'gengar', 'greninja'];
+const FEATURED_NAMES = [
+  "rayquaza",
+  "mewtwo",
+  "lucario",
+  "charizard",
+  "gengar",
+  "greninja",
+];
 
 export default function Home() {
-  const [quickQuery, setQuickQuery] = useState('');
+  const [quickQuery, setQuickQuery] = useState("");
   const [featuredList, setFeaturedList] = useState([]);
   const [loadingFeatured, setLoadingFeatured] = useState(true);
   const navigate = useNavigate();
@@ -39,7 +46,7 @@ export default function Home() {
         }
       })
       .catch((err) => {
-        console.error('Error fetching featured pokemon:', err);
+        console.error("Error fetching featured pokemon:", err);
         if (isMounted) setLoadingFeatured(false);
       });
 
@@ -53,7 +60,7 @@ export default function Home() {
     if (quickQuery.trim()) {
       navigate(`/pokedex?search=${encodeURIComponent(quickQuery.trim())}`);
     } else {
-      navigate('/pokedex');
+      navigate("/pokedex");
     }
   };
 
@@ -78,11 +85,16 @@ export default function Home() {
             </h1>
 
             <p className="text-slate-300 text-base sm:text-lg leading-relaxed max-w-2xl">
-              An immersive 3D web experience to inspect Pokémon species, run competitive squad synergy analytics, compare dual specs, and discover evolution chains in real-time.
+              An immersive 3D web experience to inspect Pokémon species, run
+              competitive squad synergy analytics, compare dual specs, and
+              discover evolution chains in real-time.
             </p>
 
             {/* Quick Search Form */}
-            <form onSubmit={handleQuickSearchSubmit} className="relative max-w-lg">
+            <form
+              onSubmit={handleQuickSearchSubmit}
+              className="relative max-w-lg"
+            >
               <Search className="w-5 h-5 text-slate-400 absolute left-4 top-1/2 -translate-y-1/2" />
               <input
                 type="text"
@@ -135,10 +147,30 @@ export default function Home() {
       {/* Stats Counter Bar */}
       <section className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {[
-          { label: 'Indexed Species', val: '1,025+', sub: 'Gen I - Gen IX Directory', icon: Database },
-          { label: 'Type Effectiveness', val: '18 Types', sub: 'Calculated Matrix Logic', icon: Flame },
-          { label: '3D Rendering', val: 'Real-Time', sub: 'WebGL Holo Projections', icon: Cpu },
-          { label: 'Team Analytics', val: '6 Slots', sub: 'Weakness & BST Coverage', icon: Shield },
+          {
+            label: "Indexed Species",
+            val: "1,025+",
+            sub: "Gen I - Gen IX Directory",
+            icon: Database,
+          },
+          {
+            label: "Type Effectiveness",
+            val: "18 Types",
+            sub: "Calculated Matrix Logic",
+            icon: Flame,
+          },
+          {
+            label: "3D Rendering",
+            val: "Real-Time",
+            sub: "WebGL Holo Projections",
+            icon: Cpu,
+          },
+          {
+            label: "Team Analytics",
+            val: "6 Slots",
+            sub: "Weakness & BST Coverage",
+            icon: Shield,
+          },
         ].map((item, idx) => {
           const Icon = item.icon;
           return (
@@ -149,10 +181,16 @@ export default function Home() {
               <div className="w-10 h-10 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400">
                 <Icon className="w-5 h-5" />
               </div>
-              <div className="text-2xl sm:text-3xl font-black uppercase text-white tracking-tight">{item.val}</div>
+              <div className="text-2xl sm:text-3xl font-black uppercase text-white tracking-tight">
+                {item.val}
+              </div>
               <div>
-                <div className="text-xs font-mono font-bold text-cyan-400 uppercase">{item.label}</div>
-                <div className="text-[11px] text-slate-400 font-mono">{item.sub}</div>
+                <div className="text-xs font-mono font-bold text-cyan-400 uppercase">
+                  {item.label}
+                </div>
+                <div className="text-[11px] text-slate-400 font-mono">
+                  {item.sub}
+                </div>
               </div>
             </div>
           );
@@ -182,7 +220,9 @@ export default function Home() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {loadingFeatured
-            ? Array.from({ length: 6 }).map((_, idx) => <SkeletonCard key={idx} />)
+            ? Array.from({ length: 6 }).map((_, idx) => (
+                <SkeletonCard key={idx} />
+              ))
             : featuredList.map((p) => <PokemonCard key={p.id} pokemon={p} />)}
         </div>
       </section>
@@ -201,25 +241,25 @@ export default function Home() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {[
             {
-              title: '3D Holographic Viewer',
-              desc: 'Inspect high-definition models in 3D space with smooth orbit controls, lighting filters, and interactive Shiny transformations.',
+              title: "3D Holographic Viewer",
+              desc: "Inspect high-definition models in 3D space with smooth orbit controls, lighting filters, and interactive Shiny transformations.",
               icon: Cpu,
-              link: '/pokedex',
-              btn: 'Launch 3D Lab',
+              link: "/pokedex",
+              btn: "Launch 3D Lab",
             },
             {
-              title: 'Competitive Squad Matrix',
-              desc: 'Assemble 6-Pokémon squads with automated type vulnerability alerts, speed tier rankings, and exportable JSON format.',
+              title: "Competitive Squad Matrix",
+              desc: "Assemble 6-Pokémon squads with automated type vulnerability alerts, speed tier rankings, and exportable JSON format.",
               icon: Shield,
-              link: '/team',
-              btn: 'Build Team',
+              link: "/team",
+              btn: "Build Team",
             },
             {
-              title: 'Dual Spec Benchmarking',
-              desc: 'Compare any two Pokémon side-by-side with stat winner badges, total BST indicators, height/weight dimensions, and move sets.',
+              title: "Dual Spec Benchmarking",
+              desc: "Compare any two Pokémon side-by-side with stat winner badges, total BST indicators, height/weight dimensions, and move sets.",
               icon: Scale,
-              link: '/compare',
-              btn: 'Compare Specs',
+              link: "/compare",
+              btn: "Compare Specs",
             },
           ].map((feature, idx) => {
             const Icon = feature.icon;
@@ -232,8 +272,12 @@ export default function Home() {
                   <div className="w-12 h-12 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400">
                     <Icon className="w-6 h-6" />
                   </div>
-                  <h3 className="text-xl font-extrabold uppercase text-white">{feature.title}</h3>
-                  <p className="text-xs text-slate-300 leading-relaxed font-mono">{feature.desc}</p>
+                  <h3 className="text-xl font-extrabold uppercase text-white">
+                    {feature.title}
+                  </h3>
+                  <p className="text-xs text-slate-300 leading-relaxed font-mono">
+                    {feature.desc}
+                  </p>
                 </div>
 
                 <Link

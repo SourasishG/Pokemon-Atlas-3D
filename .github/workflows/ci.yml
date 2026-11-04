@@ -27,7 +27,7 @@ jobs:
         run: npm run lint
 
       - name: Code Formatting Check
-        run: npm run format:check || true
+        run: npm run format:check
 
       - name: Run Unit, Component & Accessibility Tests
         run: npm run test

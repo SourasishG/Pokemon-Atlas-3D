@@ -1,19 +1,19 @@
-import React, { useState } from 'react';
-import { Heart, Trash2, Search, Compass } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import PokemonCard from '../components/pokemon/PokemonCard';
-import EmptyState from '../components/common/EmptyState';
-import TypeBadge from '../components/pokemon/TypeBadge';
-import { useFavoritesStore } from '../store/useFavoritesStore';
-import { usePokemonStore } from '../store/usePokemonStore';
-import { POKEMON_TYPES } from '../constants/pokemonConstants';
+import React, { useState } from "react";
+import { Heart, Trash2, Search, Compass } from "lucide-react";
+import { Link } from "react-router-dom";
+import PokemonCard from "../components/pokemon/PokemonCard";
+import EmptyState from "../components/common/EmptyState";
+import TypeBadge from "../components/pokemon/TypeBadge";
+import { useFavoritesStore } from "../store/useFavoritesStore";
+import { usePokemonStore } from "../store/usePokemonStore";
+import { POKEMON_TYPES } from "../constants/pokemonConstants";
 
 export default function Favorites() {
   const { favorites, clearFavorites } = useFavoritesStore();
   const { showToast } = usePokemonStore();
 
-  const [query, setQuery] = useState('');
-  const [selectedType, setSelectedType] = useState('all');
+  const [query, setQuery] = useState("");
+  const [selectedType, setSelectedType] = useState("all");
 
   const filteredFavorites = favorites.filter((p) => {
     const matchesQuery =
@@ -21,7 +21,7 @@ export default function Favorites() {
       p.displayName.toLowerCase().includes(query.toLowerCase()) ||
       String(p.id) === query.trim();
     const matchesType =
-      selectedType === 'all' || p.types.some((t) => t.name === selectedType);
+      selectedType === "all" || p.types.some((t) => t.name === selectedType);
     return matchesQuery && matchesType;
   });
 
@@ -43,7 +43,7 @@ export default function Favorites() {
           <button
             onClick={() => {
               clearFavorites();
-              showToast('Cleared all favorites', 'info');
+              showToast("Cleared all favorites", "info");
             }}
             className="px-4 py-2.5 rounded-xl bg-rose-500/10 text-rose-400 border border-rose-500/30 text-xs font-mono font-bold uppercase hover:bg-rose-500/20 transition-colors flex items-center gap-2 self-start sm:self-auto"
           >
@@ -75,9 +75,9 @@ export default function Favorites() {
                 className="w-full px-3 py-2.5 rounded-xl bg-slate-900 border border-white/10 text-slate-200 text-sm focus:outline-none focus:border-cyan-500/50 uppercase font-mono"
               >
                 <option value="all">All Types</option>
-                {POKEMON_TYPES.map((t) => (
-                  <option key={t.id} value={t.id}>
-                    {t.name}
+                {POKEMON_TYPES.map((type) => (
+                  <option key={type} value={type}>
+                    {type.toUpperCase()}
                   </option>
                 ))}
               </select>

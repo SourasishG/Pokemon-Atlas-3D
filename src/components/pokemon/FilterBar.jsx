@@ -1,8 +1,11 @@
-import React from 'react';
-import { LayoutGrid, List, SlidersHorizontal, RefreshCw } from 'lucide-react';
-import { POKEMON_TYPES, POKEMON_GENERATIONS } from '../../constants/pokemonConstants';
-import { usePokemonStore } from '../../store/usePokemonStore';
-import TypeBadge from './TypeBadge';
+import React from "react";
+import { LayoutGrid, List, SlidersHorizontal, RefreshCw } from "lucide-react";
+import {
+  POKEMON_TYPES,
+  POKEMON_GENERATIONS,
+} from "../../constants/pokemonConstants";
+import { usePokemonStore } from "../../store/usePokemonStore";
+import TypeBadge from "./TypeBadge";
 
 export default function FilterBar() {
   const {
@@ -17,9 +20,9 @@ export default function FilterBar() {
   } = usePokemonStore();
 
   const handleResetFilters = () => {
-    setSelectedType('all');
-    setSelectedGen('all');
-    setSortBy('id-asc');
+    setSelectedType("all");
+    setSelectedGen("all");
+    setSortBy("id-asc");
   };
 
   return (
@@ -58,7 +61,9 @@ export default function FilterBar() {
           </select>
 
           {/* Reset Filters */}
-          {(selectedType !== 'all' || selectedGen !== 'all' || sortBy !== 'id-asc') && (
+          {(selectedType !== "all" ||
+            selectedGen !== "all" ||
+            sortBy !== "id-asc") && (
             <button
               onClick={handleResetFilters}
               className="px-3 py-2 rounded-xl bg-rose-500/10 text-rose-400 hover:bg-rose-500/20 text-xs font-mono uppercase border border-rose-500/30 flex items-center gap-1.5 transition-colors"
@@ -72,18 +77,22 @@ export default function FilterBar() {
         {/* View Mode Switcher */}
         <div className="flex items-center bg-slate-900/80 p-1 rounded-xl border border-white/10">
           <button
-            onClick={() => setViewMode('grid')}
+            onClick={() => setViewMode("grid")}
             className={`p-2 rounded-lg text-xs transition-colors ${
-              viewMode === 'grid' ? 'bg-cyan-500/20 text-cyan-400 border border-cyan-500/40' : 'text-slate-400 hover:text-white'
+              viewMode === "grid"
+                ? "bg-cyan-500/20 text-cyan-400 border border-cyan-500/40"
+                : "text-slate-400 hover:text-white"
             }`}
             title="Grid View"
           >
             <LayoutGrid className="w-4 h-4" />
           </button>
           <button
-            onClick={() => setViewMode('list')}
+            onClick={() => setViewMode("list")}
             className={`p-2 rounded-lg text-xs transition-colors ${
-              viewMode === 'list' ? 'bg-cyan-500/20 text-cyan-400 border border-cyan-500/40' : 'text-slate-400 hover:text-white'
+              viewMode === "list"
+                ? "bg-cyan-500/20 text-cyan-400 border border-cyan-500/40"
+                : "text-slate-400 hover:text-white"
             }`}
             title="List View"
           >
@@ -95,11 +104,11 @@ export default function FilterBar() {
       {/* Type Pills Selector (Horizontally Scrollable) */}
       <div className="flex items-center gap-2 overflow-x-auto pb-2 custom-scrollbar">
         <button
-          onClick={() => setSelectedType('all')}
+          onClick={() => setSelectedType("all")}
           className={`px-4 py-1.5 rounded-xl text-xs font-mono font-bold uppercase tracking-wider transition-all border shrink-0 ${
-            selectedType === 'all'
-              ? 'bg-cyan-500 text-slate-950 border-cyan-400 shadow-[0_0_15px_rgba(6,182,212,0.4)]'
-              : 'bg-slate-900/60 text-slate-400 border-white/10 hover:text-white hover:border-white/20'
+            selectedType === "all"
+              ? "bg-cyan-500 text-slate-950 border-cyan-400 shadow-[0_0_15px_rgba(6,182,212,0.4)]"
+              : "bg-slate-900/60 text-slate-400 border-white/10 hover:text-white hover:border-white/20"
           }`}
         >
           All Types
@@ -110,8 +119,8 @@ export default function FilterBar() {
           return (
             <button
               key={type}
-              onClick={() => setSelectedType(isSelected ? 'all' : type)}
-              className={`shrink-0 transition-all ${isSelected ? 'scale-110' : 'opacity-70 hover:opacity-100'}`}
+              onClick={() => setSelectedType(isSelected ? "all" : type)}
+              className={`shrink-0 transition-all ${isSelected ? "scale-110" : "opacity-70 hover:opacity-100"}`}
             >
               <TypeBadge type={type} size="md" />
             </button>

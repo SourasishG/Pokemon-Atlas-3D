@@ -1,15 +1,16 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { Heart, Plus, ExternalLink, Check } from 'lucide-react';
-import Modal from '../common/Modal';
-import TypeBadge from './TypeBadge';
-import StatBar from './StatBar';
-import { usePokemonStore } from '../../store/usePokemonStore';
-import { useFavoritesStore } from '../../store/useFavoritesStore';
-import { useTeamStore } from '../../store/useTeamStore';
+import React from "react";
+import { Link } from "react-router-dom";
+import { Heart, Plus, ExternalLink, Check } from "lucide-react";
+import Modal from "../common/Modal";
+import TypeBadge from "./TypeBadge";
+import StatBar from "./StatBar";
+import { usePokemonStore } from "../../store/usePokemonStore";
+import { useFavoritesStore } from "../../store/useFavoritesStore";
+import { useTeamStore } from "../../store/useTeamStore";
 
 export default function QuickViewModal() {
-  const { quickViewPokemon, setQuickViewPokemon, showToast } = usePokemonStore();
+  const { quickViewPokemon, setQuickViewPokemon, showToast } =
+    usePokemonStore();
   const { isFavorite, toggleFavorite } = useFavoritesStore();
   const { isInTeam, addToTeam } = useTeamStore();
 
@@ -20,13 +21,16 @@ export default function QuickViewModal() {
 
   const handleFavorite = () => {
     toggleFavorite(quickViewPokemon);
-    showToast(favorited ? 'Removed from favorites' : 'Added to favorites', 'info');
+    showToast(
+      favorited ? "Removed from favorites" : "Added to favorites",
+      "info",
+    );
   };
 
   const handleTeam = () => {
     if (inTeam) return;
     const res = addToTeam(quickViewPokemon);
-    showToast(res.message, res.success ? 'success' : 'error');
+    showToast(res.message, res.success ? "success" : "error");
   };
 
   return (
@@ -40,7 +44,7 @@ export default function QuickViewModal() {
         {/* Left Side: Artwork & Badges */}
         <div className="flex flex-col items-center justify-center p-6 glass-card rounded-2xl border border-white/10 relative overflow-hidden">
           <span className="absolute top-3 left-3 font-mono text-xs font-bold text-cyan-400">
-            #{String(quickViewPokemon.id).padStart(4, '0')}
+            #{String(quickViewPokemon.id).padStart(4, "0")}
           </span>
 
           <img
@@ -64,16 +68,42 @@ export default function QuickViewModal() {
             </h4>
             <div className="space-y-2">
               {quickViewPokemon.stats.slice(0, 4).map((s) => (
-                <StatBar key={s.name} label={s.label} value={s.value} max={s.max} color={s.color} />
+                <StatBar
+                  key={s.name}
+                  label={s.label}
+                  value={s.value}
+                  max={s.max}
+                  color={s.color}
+                />
               ))}
             </div>
           </div>
 
           <div className="grid grid-cols-2 gap-2 text-xs font-mono pt-2 border-t border-white/10 text-slate-300">
-            <div>Height: <strong className="text-white">{quickViewPokemon.height} m</strong></div>
-            <div>Weight: <strong className="text-white">{quickViewPokemon.weight} kg</strong></div>
-            <div>Total BST: <strong className="text-cyan-400">{quickViewPokemon.totalStats}</strong></div>
-            <div>Abilities: <strong className="text-white">{quickViewPokemon.abilities.map(a => a.name).join(', ')}</strong></div>
+            <div>
+              Height:{" "}
+              <strong className="text-white">
+                {quickViewPokemon.height} m
+              </strong>
+            </div>
+            <div>
+              Weight:{" "}
+              <strong className="text-white">
+                {quickViewPokemon.weight} kg
+              </strong>
+            </div>
+            <div>
+              Total BST:{" "}
+              <strong className="text-cyan-400">
+                {quickViewPokemon.totalStats}
+              </strong>
+            </div>
+            <div>
+              Abilities:{" "}
+              <strong className="text-white">
+                {quickViewPokemon.abilities.map((a) => a.name).join(", ")}
+              </strong>
+            </div>
           </div>
 
           {/* Modal Actions */}
@@ -82,24 +112,30 @@ export default function QuickViewModal() {
               onClick={handleFavorite}
               className={`px-4 py-2.5 rounded-xl border text-xs font-mono uppercase font-bold flex items-center gap-2 transition-all ${
                 favorited
-                  ? 'bg-rose-500/20 text-rose-400 border-rose-500/40'
-                  : 'bg-slate-900/60 text-slate-300 border-white/10 hover:text-rose-400'
+                  ? "bg-rose-500/20 text-rose-400 border-rose-500/40"
+                  : "bg-slate-900/60 text-slate-300 border-white/10 hover:text-rose-400"
               }`}
             >
-              <Heart className={`w-4 h-4 ${favorited ? 'fill-rose-400' : ''}`} />
-              {favorited ? 'Favorited' : 'Favorite'}
+              <Heart
+                className={`w-4 h-4 ${favorited ? "fill-rose-400" : ""}`}
+              />
+              {favorited ? "Favorited" : "Favorite"}
             </button>
 
             <button
               onClick={handleTeam}
               className={`px-4 py-2.5 rounded-xl border text-xs font-mono uppercase font-bold flex items-center gap-2 transition-all ${
                 inTeam
-                  ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/40'
-                  : 'bg-cyan-500 text-slate-950 font-extrabold border-cyan-400 hover:bg-cyan-400'
+                  ? "bg-emerald-500/20 text-emerald-400 border-emerald-500/40"
+                  : "bg-cyan-500 text-slate-950 font-extrabold border-cyan-400 hover:bg-cyan-400"
               }`}
             >
-              {inTeam ? <Check className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
-              {inTeam ? 'In Team' : 'Add to Team'}
+              {inTeam ? (
+                <Check className="w-4 h-4" />
+              ) : (
+                <Plus className="w-4 h-4" />
+              )}
+              {inTeam ? "In Team" : "Add to Team"}
             </button>
 
             <Link

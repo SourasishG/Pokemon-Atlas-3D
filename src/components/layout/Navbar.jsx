@@ -1,9 +1,18 @@
-import React, { useState } from 'react';
-import { NavLink, Link } from 'react-router-dom';
-import { Home, Compass, Shield, Scale, Heart, Menu, X, Cpu } from 'lucide-react';
-import { useTeamStore } from '../../store/useTeamStore';
-import { useFavoritesStore } from '../../store/useFavoritesStore';
-import MobileMenu from './MobileMenu';
+import React, { useState } from "react";
+import { NavLink, Link } from "react-router-dom";
+import {
+  Home,
+  Compass,
+  Shield,
+  Scale,
+  Heart,
+  Menu,
+  X,
+  Cpu,
+} from "lucide-react";
+import { useTeamStore } from "../../store/useTeamStore";
+import { useFavoritesStore } from "../../store/useFavoritesStore";
+import MobileMenu from "./MobileMenu";
 
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -11,11 +20,21 @@ export default function Navbar() {
   const favorites = useFavoritesStore((state) => state.favorites);
 
   const navLinks = [
-    { to: '/', label: 'Home', icon: Home },
-    { to: '/pokedex', label: 'Pokédex', icon: Compass },
-    { to: '/team', label: 'Team Builder', icon: Shield, badge: team.length > 0 ? `${team.length}/6` : null },
-    { to: '/compare', label: 'Compare', icon: Scale },
-    { to: '/favorites', label: 'Favorites', icon: Heart, badge: favorites.length > 0 ? favorites.length : null },
+    { to: "/", label: "Home", icon: Home },
+    { to: "/pokedex", label: "Pokédex", icon: Compass },
+    {
+      to: "/team",
+      label: "Team Builder",
+      icon: Shield,
+      badge: team.length > 0 ? `${team.length}/6` : null,
+    },
+    { to: "/compare", label: "Compare", icon: Scale },
+    {
+      to: "/favorites",
+      label: "Favorites",
+      icon: Heart,
+      badge: favorites.length > 0 ? favorites.length : null,
+    },
   ];
 
   return (
@@ -45,8 +64,8 @@ export default function Navbar() {
                   className={({ isActive }) =>
                     `px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-widest transition-all flex items-center gap-2 relative ${
                       isActive
-                        ? 'text-cyan-400 bg-cyan-500/10 border border-cyan-500/30 shadow-[0_0_15px_rgba(6,182,212,0.2)]'
-                        : 'text-slate-400 hover:text-white hover:bg-white/5'
+                        ? "text-cyan-400 bg-cyan-500/10 border border-cyan-500/30 shadow-[0_0_15px_rgba(6,182,212,0.2)]"
+                        : "text-slate-400 hover:text-white hover:bg-white/5"
                     }`
                   }
                 >
@@ -75,7 +94,11 @@ export default function Navbar() {
               className="md:hidden p-2.5 rounded-xl bg-slate-900 border border-white/10 text-slate-300 hover:text-cyan-400 hover:border-cyan-500/40 transition-colors"
               aria-label="Toggle mobile menu"
             >
-              {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {isMobileMenuOpen ? (
+                <X className="w-6 h-6" />
+              ) : (
+                <Menu className="w-6 h-6" />
+              )}
             </button>
           </div>
         </div>

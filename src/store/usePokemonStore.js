@@ -1,12 +1,12 @@
-import { create } from 'zustand';
+import { create } from "zustand";
 
 export const usePokemonStore = create((set) => ({
   // Explorer filters
-  searchQuery: '',
-  selectedType: 'all',
-  selectedGen: 'all',
-  sortBy: 'id-asc', // 'id-asc', 'id-desc', 'name-asc', 'stat-desc'
-  viewMode: 'grid', // 'grid' | 'list'
+  searchQuery: "",
+  selectedType: "all",
+  selectedGen: "all",
+  sortBy: "id-asc", // 'id-asc', 'id-desc', 'name-asc', 'stat-desc'
+  viewMode: "grid", // 'grid' | 'list'
   pageOffset: 0,
 
   // Performance & Accessibility
@@ -26,12 +26,14 @@ export const usePokemonStore = create((set) => ({
   setSortBy: (sort) => set({ sortBy: sort }),
   setViewMode: (mode) => set({ viewMode: mode }),
   setPageOffset: (offset) => set({ pageOffset: offset }),
-  toggleLowPerformanceMode: () => set((state) => ({ lowPerformanceMode: !state.lowPerformanceMode })),
-  toggleReducedMotion: () => set((state) => ({ reducedMotion: !state.reducedMotion })),
+  toggleLowPerformanceMode: () =>
+    set((state) => ({ lowPerformanceMode: !state.lowPerformanceMode })),
+  toggleReducedMotion: () =>
+    set((state) => ({ reducedMotion: !state.reducedMotion })),
   setQuickViewPokemon: (pokemon) => set({ quickViewPokemon: pokemon }),
 
   // Toast trigger
-  showToast: (message, type = 'info') => {
+  showToast: (message, type = "info") => {
     set({ toast: { message, type, id: Date.now() } });
     setTimeout(() => {
       set({ toast: null });

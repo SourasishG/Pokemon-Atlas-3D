@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { motion } from 'motion/react';
-import { Heart, Plus, Eye, Check } from 'lucide-react';
-import TypeBadge from './TypeBadge';
-import { useFavoritesStore } from '../../store/useFavoritesStore';
-import { useTeamStore } from '../../store/useTeamStore';
-import { usePokemonStore } from '../../store/usePokemonStore';
-import { getTypeColor } from '../../utils/typeColors';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { motion } from "motion/react";
+import { Heart, Plus, Eye, Check } from "lucide-react";
+import TypeBadge from "./TypeBadge";
+import { useFavoritesStore } from "../../store/useFavoritesStore";
+import { useTeamStore } from "../../store/useTeamStore";
+import { usePokemonStore } from "../../store/usePokemonStore";
+import { getTypeColor } from "../../utils/typeColors";
 
 export default function PokemonCard({ pokemon }) {
   const [imageLoaded, setImageLoaded] = useState(false);
@@ -19,18 +19,20 @@ export default function PokemonCard({ pokemon }) {
 
   const favorited = isFavorite(pokemon.id);
   const inTeam = isInTeam(pokemon.id);
-  const primaryType = pokemon.types[0]?.name || 'normal';
+  const primaryType = pokemon.types[0]?.name || "normal";
   const typeTheme = getTypeColor(primaryType);
 
-  const formattedId = `#${String(pokemon.id).padStart(4, '0')}`;
+  const formattedId = `#${String(pokemon.id).padStart(4, "0")}`;
 
   const handleFavoriteClick = (e) => {
     e.preventDefault();
     e.stopPropagation();
     toggleFavorite(pokemon);
     showToast(
-      favorited ? `Removed ${pokemon.displayName} from Favorites` : `Added ${pokemon.displayName} to Favorites`,
-      favorited ? 'info' : 'success'
+      favorited
+        ? `Removed ${pokemon.displayName} from Favorites`
+        : `Added ${pokemon.displayName} to Favorites`,
+      favorited ? "info" : "success",
     );
   };
 
@@ -38,11 +40,11 @@ export default function PokemonCard({ pokemon }) {
     e.preventDefault();
     e.stopPropagation();
     if (inTeam) {
-      showToast(`${pokemon.displayName} is already in your team`, 'info');
+      showToast(`${pokemon.displayName} is already in your team`, "info");
       return;
     }
     const result = addToTeam(pokemon);
-    showToast(result.message, result.success ? 'success' : 'error');
+    showToast(result.message, result.success ? "success" : "error");
   };
 
   const handleQuickView = (e) => {
@@ -73,23 +75,29 @@ export default function PokemonCard({ pokemon }) {
             onClick={handleFavoriteClick}
             className={`p-2 rounded-full backdrop-blur-md transition-all duration-200 ${
               favorited
-                ? 'bg-rose-500/20 text-rose-400 border border-rose-500/40 shadow-[0_0_12px_rgba(244,63,94,0.3)]'
-                : 'bg-slate-900/70 text-slate-400 hover:text-rose-400 border border-white/10 hover:border-rose-500/30'
+                ? "bg-rose-500/20 text-rose-400 border border-rose-500/40 shadow-[0_0_12px_rgba(244,63,94,0.3)]"
+                : "bg-slate-900/70 text-slate-400 hover:text-rose-400 border border-white/10 hover:border-rose-500/30"
             }`}
-            title={favorited ? 'Remove Favorite' : 'Save Favorite'}
+            title={favorited ? "Remove Favorite" : "Save Favorite"}
           >
-            <Heart className={`w-4 h-4 transition-transform group-active:scale-90 ${favorited ? 'fill-rose-400' : ''}`} />
+            <Heart
+              className={`w-4 h-4 transition-transform group-active:scale-90 ${favorited ? "fill-rose-400" : ""}`}
+            />
           </button>
           <button
             onClick={handleTeamClick}
             className={`p-2 rounded-full backdrop-blur-md transition-all duration-200 ${
               inTeam
-                ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 shadow-[0_0_12px_rgba(16,185,129,0.3)]'
-                : 'bg-slate-900/70 text-slate-400 hover:text-cyan-400 border border-white/10 hover:border-cyan-500/30'
+                ? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 shadow-[0_0_12px_rgba(16,185,129,0.3)]"
+                : "bg-slate-900/70 text-slate-400 hover:text-cyan-400 border border-white/10 hover:border-cyan-500/30"
             }`}
-            title={inTeam ? 'In Team' : 'Add to Team'}
+            title={inTeam ? "In Team" : "Add to Team"}
           >
-            {inTeam ? <Check className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
+            {inTeam ? (
+              <Check className="w-4 h-4" />
+            ) : (
+              <Plus className="w-4 h-4" />
+            )}
           </button>
           <button
             onClick={handleQuickView}
@@ -102,7 +110,10 @@ export default function PokemonCard({ pokemon }) {
       </div>
 
       {/* Center Image Container */}
-      <Link to={`/pokemon/${pokemon.name}`} className="relative my-2 flex items-center justify-center flex-1">
+      <Link
+        to={`/pokemon/${pokemon.name}`}
+        className="relative my-2 flex items-center justify-center flex-1"
+      >
         <div className="w-32 h-32 relative flex items-center justify-center">
           {/* Subtle spinning ring behind pokemon */}
           <div
@@ -120,7 +131,7 @@ export default function PokemonCard({ pokemon }) {
             loading="lazy"
             onLoad={() => setImageLoaded(true)}
             className={`w-28 h-28 object-contain drop-shadow-[0_12px_18px_rgba(0,0,0,0.6)] group-hover:scale-110 transition-all duration-300 relative z-10 ${
-              imageLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
+              imageLoaded ? "opacity-100 scale-100" : "opacity-0 scale-95"
             }`}
           />
         </div>
@@ -143,11 +154,17 @@ export default function PokemonCard({ pokemon }) {
 
         {/* Stat Summary Meter */}
         <div className="pt-2 border-t border-white/10 flex items-center justify-between text-[10px] font-mono uppercase text-slate-400">
-          <span>Total BST: <strong className="text-cyan-400 font-bold">{pokemon.totalStats}</strong></span>
-          <span className="text-emerald-400 font-bold">SPD: {pokemon.stats.find(s => s.name === 'speed')?.value || 0}</span>
+          <span>
+            Total BST:{" "}
+            <strong className="text-cyan-400 font-bold">
+              {pokemon.totalStats}
+            </strong>
+          </span>
+          <span className="text-emerald-400 font-bold">
+            SPD: {pokemon.stats.find((s) => s.name === "speed")?.value || 0}
+          </span>
         </div>
       </div>
     </motion.div>
   );
 }
-

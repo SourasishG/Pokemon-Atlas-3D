@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import { Compass, RefreshCw, Layers } from 'lucide-react';
-import SearchBar from '../components/pokemon/SearchBar';
-import FilterBar from '../components/pokemon/FilterBar';
-import PokemonGrid from '../components/pokemon/PokemonGrid';
-import QuickViewModal from '../components/pokemon/QuickViewModal';
-import { usePokemonStore } from '../store/usePokemonStore';
-import { getPokemonList } from '../services/pokeapi';
+import React, { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
+import { Compass, RefreshCw, Layers } from "lucide-react";
+import SearchBar from "../components/pokemon/SearchBar";
+import FilterBar from "../components/pokemon/FilterBar";
+import PokemonGrid from "../components/pokemon/PokemonGrid";
+import QuickViewModal from "../components/pokemon/QuickViewModal";
+import { usePokemonStore } from "../store/usePokemonStore";
+import { getPokemonList } from "../services/pokeapi";
 
 export default function Pokedex() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const initialQuery = searchParams.get('search') || '';
+  const initialQuery = searchParams.get("search") || "";
 
   const {
     searchQuery,
@@ -59,9 +59,9 @@ export default function Pokedex() {
           }
         })
         .catch((err) => {
-          if (err.name !== 'AbortError') {
-            console.error('Error in Pokedex fetch:', err);
-            setError('Failed to fetch Pokémon directory. Please try again.');
+          if (err.name !== "AbortError") {
+            console.error("Error in Pokedex fetch:", err);
+            setError("Failed to fetch Pokémon directory. Please try again.");
           }
         })
         .finally(() => setLoading(false));
@@ -75,21 +75,22 @@ export default function Pokedex() {
 
   // Client-side sorting
   const sortedItems = [...items].sort((a, b) => {
-    if (sortBy === 'id-asc') return a.id - b.id;
-    if (sortBy === 'id-desc') return b.id - a.id;
-    if (sortBy === 'name-asc') return a.displayName.localeCompare(b.displayName);
-    if (sortBy === 'stat-desc') return b.totalStats - a.totalStats;
+    if (sortBy === "id-asc") return a.id - b.id;
+    if (sortBy === "id-desc") return b.id - a.id;
+    if (sortBy === "name-asc")
+      return a.displayName.localeCompare(b.displayName);
+    if (sortBy === "stat-desc") return b.totalStats - a.totalStats;
     return 0;
   });
 
   const handleNextPage = () => {
     setPageOffset(pageOffset + 24);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const handlePrevPage = () => {
     setPageOffset(Math.max(0, pageOffset - 24));
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
@@ -108,7 +109,9 @@ export default function Pokedex() {
 
         <div className="flex items-center gap-2 px-4 py-2 rounded-2xl bg-slate-900 border border-white/10 text-xs font-mono">
           <span className="text-slate-400">INDEXED:</span>
-          <strong className="text-cyan-400 font-bold">{totalCount} Pokémon</strong>
+          <strong className="text-cyan-400 font-bold">
+            {totalCount} Pokémon
+          </strong>
         </div>
       </div>
 
@@ -130,7 +133,11 @@ export default function Pokedex() {
           </button>
         </div>
       ) : (
-        <PokemonGrid items={sortedItems} isLoading={loading} viewMode={viewMode} />
+        <PokemonGrid
+          items={sortedItems}
+          isLoading={loading}
+          viewMode={viewMode}
+        />
       )}
 
       {/* Pagination Bar */}
@@ -145,7 +152,8 @@ export default function Pokedex() {
           </button>
 
           <span className="text-slate-400">
-            Page {Math.floor(pageOffset / 24) + 1} of {Math.ceil(totalCount / 24)}
+            Page {Math.floor(pageOffset / 24) + 1} of{" "}
+            {Math.ceil(totalCount / 24)}
           </span>
 
           <button

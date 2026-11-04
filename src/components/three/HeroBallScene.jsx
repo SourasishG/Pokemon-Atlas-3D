@@ -1,9 +1,9 @@
-import React, { useRef } from 'react';
-import { useFrame } from '@react-three/fiber';
-import { Float } from '@react-three/drei';
-import * as THREE from 'three';
-import SafeCanvas from './SafeCanvas';
-import SafeOrbitControls from './SafeOrbitControls';
+import React, { useRef } from "react";
+import { useFrame } from "@react-three/fiber";
+import { Float } from "@react-three/drei";
+import * as THREE from "three";
+import SafeCanvas from "./SafeCanvas";
+import SafeOrbitControls from "./SafeOrbitControls";
 
 function PokéBallMesh() {
   const ballRef = useRef();
@@ -26,12 +26,20 @@ function PokéBallMesh() {
       {/* Top Hemisphere (Red / Cyan Glow) */}
       <mesh position={[0, 0, 0]}>
         <sphereGeometry args={[1.5, 32, 16, 0, Math.PI * 2, 0, Math.PI / 2]} />
-        <meshStandardMaterial color="#06b6d4" roughness={0.2} metalness={0.8} emissive="#0284c7" emissiveIntensity={0.3} />
+        <meshStandardMaterial
+          color="#06b6d4"
+          roughness={0.2}
+          metalness={0.8}
+          emissive="#0284c7"
+          emissiveIntensity={0.3}
+        />
       </mesh>
 
       {/* Bottom Hemisphere (White Metallic) */}
       <mesh position={[0, 0, 0]}>
-        <sphereGeometry args={[1.5, 32, 16, 0, Math.PI * 2, Math.PI / 2, Math.PI / 2]} />
+        <sphereGeometry
+          args={[1.5, 32, 16, 0, Math.PI * 2, Math.PI / 2, Math.PI / 2]}
+        />
         <meshStandardMaterial color="#f8fafc" roughness={0.3} metalness={0.9} />
       </mesh>
 
@@ -93,7 +101,13 @@ function FloatingParticles() {
           itemSize={3}
         />
       </bufferGeometry>
-      <pointsMaterial size={0.08} color="#06b6d4" transparent opacity={0.7} sizeAttenuation />
+      <pointsMaterial
+        size={0.08}
+        color="#06b6d4"
+        transparent
+        opacity={0.7}
+        sizeAttenuation
+      />
     </points>
   );
 }
@@ -103,7 +117,7 @@ export default function HeroBallScene() {
     <div className="w-full h-full min-h-[350px] relative flex items-center justify-center">
       <SafeCanvas
         camera={{ position: [0, 0, 5], fov: 45 }}
-        style={{ background: 'transparent' }}
+        style={{ background: "transparent" }}
       >
         <ambientLight intensity={0.8} />
         <directionalLight position={[5, 5, 5]} intensity={1.5} />
@@ -115,7 +129,13 @@ export default function HeroBallScene() {
 
         <FloatingParticles />
 
-        <SafeOrbitControls enableZoom={false} autoRotate autoRotateSpeed={1.5} enableDamping={true} dampingFactor={0.05} />
+        <SafeOrbitControls
+          enableZoom={false}
+          autoRotate
+          autoRotateSpeed={1.5}
+          enableDamping={true}
+          dampingFactor={0.05}
+        />
       </SafeCanvas>
     </div>
   );

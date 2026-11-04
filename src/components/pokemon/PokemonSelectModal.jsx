@@ -1,14 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import { Search, Filter, X, Sparkles } from 'lucide-react';
-import Modal from '../common/Modal';
-import TypeBadge from './TypeBadge';
-import SkeletonCard from '../common/SkeletonCard';
-import { getPokemonList } from '../../services/pokeapi';
-import { POKEMON_TYPES } from '../../constants/pokemonConstants';
+import React, { useState, useEffect } from "react";
+import { Search, Filter, X, Sparkles } from "lucide-react";
+import Modal from "../common/Modal";
+import TypeBadge from "./TypeBadge";
+import SkeletonCard from "../common/SkeletonCard";
+import { getPokemonList } from "../../services/pokeapi";
+import { POKEMON_TYPES } from "../../constants/pokemonConstants";
 
-export default function PokemonSelectModal({ isOpen, onClose, onSelectPokemon, title = "Select a Pokémon" }) {
-  const [search, setSearch] = useState('');
-  const [selectedType, setSelectedType] = useState('all');
+export default function PokemonSelectModal({
+  isOpen,
+  onClose,
+  onSelectPokemon,
+  title = "Select a Pokémon",
+}) {
+  const [search, setSearch] = useState("");
+  const [selectedType, setSelectedType] = useState("all");
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -32,7 +37,7 @@ export default function PokemonSelectModal({ isOpen, onClose, onSelectPokemon, t
           }
         })
         .catch((err) => {
-          if (err.name !== 'AbortError') {
+          if (err.name !== "AbortError") {
             console.error(err);
           }
         })
@@ -66,7 +71,7 @@ export default function PokemonSelectModal({ isOpen, onClose, onSelectPokemon, t
             />
             {search && (
               <button
-                onClick={() => setSearch('')}
+                onClick={() => setSearch("")}
                 className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white"
               >
                 <X className="w-4 h-4" />
@@ -81,9 +86,9 @@ export default function PokemonSelectModal({ isOpen, onClose, onSelectPokemon, t
               className="w-full px-3 py-2.5 rounded-xl bg-slate-900 border border-white/10 text-slate-200 text-sm focus:outline-none focus:border-cyan-500/50 uppercase font-mono"
             >
               <option value="all">All Types</option>
-              {POKEMON_TYPES.map((t) => (
-                <option key={t.id} value={t.id}>
-                  {t.name}
+              {POKEMON_TYPES.map((type) => (
+                <option key={type} value={type}>
+                  {type.charAt(0).toUpperCase() + type.slice(1)}
                 </option>
               ))}
             </select>
@@ -94,7 +99,10 @@ export default function PokemonSelectModal({ isOpen, onClose, onSelectPokemon, t
         <div className="max-h-[60vh] overflow-y-auto pr-1 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
           {loading
             ? Array.from({ length: 8 }).map((_, idx) => (
-                <div key={idx} className="h-32 rounded-2xl bg-slate-900/60 border border-white/5 animate-pulse" />
+                <div
+                  key={idx}
+                  className="h-32 rounded-2xl bg-slate-900/60 border border-white/5 animate-pulse"
+                />
               ))
             : items.map((p) => (
                 <button
@@ -103,7 +111,7 @@ export default function PokemonSelectModal({ isOpen, onClose, onSelectPokemon, t
                   className="p-3 glass-card rounded-2xl border border-white/10 hover:border-cyan-500/50 hover:bg-cyan-500/10 flex flex-col items-center justify-center text-center group transition-all"
                 >
                   <span className="font-mono text-[10px] text-cyan-400 font-bold self-start">
-                    #{String(p.id).padStart(4, '0')}
+                    #{String(p.id).padStart(4, "0")}
                   </span>
                   <img
                     src={p.image}
@@ -123,7 +131,8 @@ export default function PokemonSelectModal({ isOpen, onClose, onSelectPokemon, t
 
           {!loading && items.length === 0 && (
             <div className="col-span-full py-12 text-center text-slate-400 font-mono text-sm">
-              No Pokémon found matching "{search}". Try another search term or filter.
+              No Pokémon found matching "{search}". Try another search term or
+              filter.
             </div>
           )}
         </div>

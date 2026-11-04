@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
-import { motion } from 'motion/react';
+import React, { useState, useEffect } from "react";
+import { useParams, Link, useNavigate } from "react-router-dom";
+import { motion } from "motion/react";
 import {
   Heart,
   Plus,
@@ -13,17 +13,17 @@ import {
   Check,
   Info,
   Swords,
-} from 'lucide-react';
-import PokemonViewer from '../components/three/PokemonViewer';
-import TypeBadge from '../components/pokemon/TypeBadge';
-import StatBar from '../components/pokemon/StatBar';
-import EvolutionChain from '../components/pokemon/EvolutionChain';
-import { getPokemonFullDetails } from '../services/pokeapi';
-import { useFavoritesStore } from '../store/useFavoritesStore';
-import { useTeamStore } from '../store/useTeamStore';
-import { useCompareStore } from '../store/useCompareStore';
-import { usePokemonStore } from '../store/usePokemonStore';
-import { getWeaknessSummary } from '../utils/typeEffectiveness';
+} from "lucide-react";
+import PokemonViewer from "../components/three/PokemonViewer";
+import TypeBadge from "../components/pokemon/TypeBadge";
+import StatBar from "../components/pokemon/StatBar";
+import EvolutionChain from "../components/pokemon/EvolutionChain";
+import { getPokemonFullDetails } from "../services/pokeapi";
+import { useFavoritesStore } from "../store/useFavoritesStore";
+import { useTeamStore } from "../store/useTeamStore";
+import { useCompareStore } from "../store/useCompareStore";
+import { usePokemonStore } from "../store/usePokemonStore";
+import { getWeaknessSummary } from "../utils/typeEffectiveness";
 
 export default function PokemonDetail() {
   const { id } = useParams();
@@ -51,7 +51,7 @@ export default function PokemonDetail() {
         }
       })
       .catch((err) => {
-        console.error('Error fetching pokemon detail:', err);
+        console.error("Error fetching pokemon detail:", err);
         if (isMounted) setLoading(false);
       });
 
@@ -74,7 +74,9 @@ export default function PokemonDetail() {
   if (!pokemon) {
     return (
       <div className="py-20 text-center space-y-4 glass-panel rounded-3xl border border-rose-500/30">
-        <h2 className="text-2xl font-black uppercase text-rose-400">Pokémon Record Not Found</h2>
+        <h2 className="text-2xl font-black uppercase text-rose-400">
+          Pokémon Record Not Found
+        </h2>
         <p className="text-sm font-mono text-slate-300">
           No species records found matching query "{id}".
         </p>
@@ -96,24 +98,26 @@ export default function PokemonDetail() {
   const handleFavoriteClick = () => {
     toggleFavorite(pokemon);
     showToast(
-      favorited ? `Removed ${pokemon.displayName} from Favorites` : `Added ${pokemon.displayName} to Favorites`,
-      favorited ? 'info' : 'success'
+      favorited
+        ? `Removed ${pokemon.displayName} from Favorites`
+        : `Added ${pokemon.displayName} to Favorites`,
+      favorited ? "info" : "success",
     );
   };
 
   const handleTeamClick = () => {
     if (inTeam) {
-      showToast(`${pokemon.displayName} is already in your team`, 'info');
+      showToast(`${pokemon.displayName} is already in your team`, "info");
       return;
     }
     const res = addToTeam(pokemon);
-    showToast(res.message, res.success ? 'success' : 'error');
+    showToast(res.message, res.success ? "success" : "error");
   };
 
   const handleCompareClick = () => {
     setSlotA(pokemon);
-    showToast(`Set ${pokemon.displayName} as Slot A in Compare!`, 'success');
-    navigate('/compare');
+    showToast(`Set ${pokemon.displayName} as Slot A in Compare!`, "success");
+    navigate("/compare");
   };
 
   return (
@@ -133,24 +137,28 @@ export default function PokemonDetail() {
             onClick={handleFavoriteClick}
             className={`px-4 py-2.5 rounded-xl border text-xs font-mono font-bold uppercase flex items-center gap-2 transition-all ${
               favorited
-                ? 'bg-rose-500/20 text-rose-400 border-rose-500/40 shadow-[0_0_15px_rgba(244,63,94,0.3)]'
-                : 'bg-slate-900 text-slate-300 border-white/10 hover:text-rose-400'
+                ? "bg-rose-500/20 text-rose-400 border-rose-500/40 shadow-[0_0_15px_rgba(244,63,94,0.3)]"
+                : "bg-slate-900 text-slate-300 border-white/10 hover:text-rose-400"
             }`}
           >
-            <Heart className={`w-4 h-4 ${favorited ? 'fill-rose-400' : ''}`} />
-            <span>{favorited ? 'Favorited' : 'Favorite'}</span>
+            <Heart className={`w-4 h-4 ${favorited ? "fill-rose-400" : ""}`} />
+            <span>{favorited ? "Favorited" : "Favorite"}</span>
           </button>
 
           <button
             onClick={handleTeamClick}
             className={`px-4 py-2.5 rounded-xl border text-xs font-mono font-extrabold uppercase flex items-center gap-2 transition-all ${
               inTeam
-                ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/40'
-                : 'bg-cyan-500 text-slate-950 border-cyan-400 hover:bg-cyan-400 shadow-[0_0_15px_rgba(6,182,212,0.3)]'
+                ? "bg-emerald-500/20 text-emerald-400 border-emerald-500/40"
+                : "bg-cyan-500 text-slate-950 border-cyan-400 hover:bg-cyan-400 shadow-[0_0_15px_rgba(6,182,212,0.3)]"
             }`}
           >
-            {inTeam ? <Check className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
-            <span>{inTeam ? 'In Team' : 'Add to Team'}</span>
+            {inTeam ? (
+              <Check className="w-4 h-4" />
+            ) : (
+              <Plus className="w-4 h-4" />
+            )}
+            <span>{inTeam ? "In Team" : "Add to Team"}</span>
           </button>
 
           <button
@@ -176,16 +184,28 @@ export default function PokemonDetail() {
           {/* Dimension Details Banner */}
           <div className="grid grid-cols-3 gap-3 p-4 rounded-2xl bg-slate-900/80 border border-white/10 font-mono text-center">
             <div>
-              <span className="text-[10px] uppercase text-slate-400 font-bold block">Height</span>
-              <span className="text-base font-extrabold text-white">{pokemon.height} m</span>
+              <span className="text-[10px] uppercase text-slate-400 font-bold block">
+                Height
+              </span>
+              <span className="text-base font-extrabold text-white">
+                {pokemon.height} m
+              </span>
             </div>
             <div>
-              <span className="text-[10px] uppercase text-slate-400 font-bold block">Weight</span>
-              <span className="text-base font-extrabold text-white">{pokemon.weight} kg</span>
+              <span className="text-[10px] uppercase text-slate-400 font-bold block">
+                Weight
+              </span>
+              <span className="text-base font-extrabold text-white">
+                {pokemon.weight} kg
+              </span>
             </div>
             <div>
-              <span className="text-[10px] uppercase text-slate-400 font-bold block">Base Stat Total</span>
-              <span className="text-base font-black text-cyan-400">{pokemon.totalStats} BST</span>
+              <span className="text-[10px] uppercase text-slate-400 font-bold block">
+                Base Stat Total
+              </span>
+              <span className="text-base font-black text-cyan-400">
+                {pokemon.totalStats} BST
+              </span>
             </div>
           </div>
         </div>
@@ -195,7 +215,7 @@ export default function PokemonDetail() {
           <div className="space-y-3">
             <div className="flex items-center justify-between">
               <span className="font-mono text-sm font-extrabold text-cyan-400 tracking-widest">
-                #{String(pokemon.id).padStart(4, '0')}
+                #{String(pokemon.id).padStart(4, "0")}
               </span>
               <div className="flex gap-1.5">
                 {pokemon.types.map((t) => (
@@ -245,7 +265,10 @@ export default function PokemonDetail() {
               </span>
               <ul className="space-y-1.5 font-mono text-xs">
                 {pokemon.abilities.map((a, idx) => (
-                  <li key={idx} className="flex items-center justify-between text-slate-200 uppercase font-bold">
+                  <li
+                    key={idx}
+                    className="flex items-center justify-between text-slate-200 uppercase font-bold"
+                  >
                     <span>{a.name}</span>
                     {a.isHidden && (
                       <span className="text-[9px] px-2 py-0.5 rounded bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 font-normal">
@@ -278,7 +301,10 @@ export default function PokemonDetail() {
       </div>
 
       {/* Evolution Chain Section */}
-      <EvolutionChain chain={pokemon.evolutionChain} currentPokemonId={pokemon.id} />
+      <EvolutionChain
+        chain={pokemon.evolutionChain}
+        currentPokemonId={pokemon.id}
+      />
 
       {/* Defensive Type Matchup Vulnerability Breakdown */}
       <div className="glass-panel rounded-3xl p-6 sm:p-8 border border-white/10 space-y-6">
@@ -295,16 +321,22 @@ export default function PokemonDetail() {
             </span>
             <div className="flex flex-wrap gap-2">
               {[...weaknesses.weak4x, ...weaknesses.weak2x].map((t) => (
-                <div key={t} className="flex items-center gap-1 bg-slate-950 p-1 rounded-xl">
+                <div
+                  key={t}
+                  className="flex items-center gap-1 bg-slate-950 p-1 rounded-xl"
+                >
                   <TypeBadge type={t} size="sm" />
                   {weaknesses.weak4x.includes(t) && (
-                    <span className="text-[10px] font-mono text-amber-400 font-black px-1">4x</span>
+                    <span className="text-[10px] font-mono text-amber-400 font-black px-1">
+                      4x
+                    </span>
                   )}
                 </div>
               ))}
-              {weaknesses.weak4x.length === 0 && weaknesses.weak2x.length === 0 && (
-                <span className="text-xs font-mono text-slate-400">None</span>
-              )}
+              {weaknesses.weak4x.length === 0 &&
+                weaknesses.weak2x.length === 0 && (
+                  <span className="text-xs font-mono text-slate-400">None</span>
+                )}
             </div>
           </div>
 
@@ -314,17 +346,26 @@ export default function PokemonDetail() {
               Resistant To (0.5x / 0.25x Damage)
             </span>
             <div className="flex flex-wrap gap-2">
-              {[...weaknesses.resistantQuarter, ...weaknesses.resistantHalf].map((t) => (
-                <div key={t} className="flex items-center gap-1 bg-slate-950 p-1 rounded-xl">
+              {[
+                ...weaknesses.resistantQuarter,
+                ...weaknesses.resistantHalf,
+              ].map((t) => (
+                <div
+                  key={t}
+                  className="flex items-center gap-1 bg-slate-950 p-1 rounded-xl"
+                >
                   <TypeBadge type={t} size="sm" />
                   {weaknesses.resistantQuarter.includes(t) && (
-                    <span className="text-[10px] font-mono text-emerald-400 font-black px-1">1/4</span>
+                    <span className="text-[10px] font-mono text-emerald-400 font-black px-1">
+                      1/4
+                    </span>
                   )}
                 </div>
               ))}
-              {weaknesses.resistantQuarter.length === 0 && weaknesses.resistantHalf.length === 0 && (
-                <span className="text-xs font-mono text-slate-400">None</span>
-              )}
+              {weaknesses.resistantQuarter.length === 0 &&
+                weaknesses.resistantHalf.length === 0 && (
+                  <span className="text-xs font-mono text-slate-400">None</span>
+                )}
             </div>
           </div>
 
@@ -338,7 +379,9 @@ export default function PokemonDetail() {
                 <TypeBadge key={t} type={t} size="sm" />
               ))}
               {weaknesses.immune.length === 0 && (
-                <span className="text-xs font-mono text-slate-400">No complete immunities</span>
+                <span className="text-xs font-mono text-slate-400">
+                  No complete immunities
+                </span>
               )}
             </div>
           </div>

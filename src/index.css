@@ -18,7 +18,11 @@ html {
     border: 1px solid rgba(255, 255, 255, 0.12);
   }
   .glass-card {
-    background: linear-gradient(135deg, rgba(30, 41, 59, 0.45) 0%, rgba(15, 23, 42, 0.65) 100%);
+    background: linear-gradient(
+      135deg,
+      rgba(30, 41, 59, 0.45) 0%,
+      rgba(15, 23, 42, 0.65) 100%
+    );
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     border: 1px solid rgba(255, 255, 255, 0.08);
@@ -26,7 +30,9 @@ html {
   }
   .glass-card:hover {
     border-color: rgba(6, 182, 212, 0.5);
-    box-shadow: 0 12px 36px -10px rgba(6, 182, 212, 0.25), 0 0 20px 0 rgba(6, 182, 212, 0.15);
+    box-shadow:
+      0 12px 36px -10px rgba(6, 182, 212, 0.25),
+      0 0 20px 0 rgba(6, 182, 212, 0.15);
     transform: translateY(-4px);
   }
   .shimmer-mask {
@@ -45,7 +51,16 @@ html {
 body {
   background-color: #020617;
   color: #f8fafc;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    sans-serif;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -60,8 +75,8 @@ img {
 .scanlines {
   background: linear-gradient(
     to bottom,
-    rgba(255,255,255,0),
-    rgba(255,255,255,0) 50%,
+    rgba(255, 255, 255, 0),
+    rgba(255, 255, 255, 0) 50%,
     rgba(0, 0, 0, 0.2) 50%,
     rgba(0, 0, 0, 0.2)
   );
@@ -86,13 +101,21 @@ img {
 }
 
 @keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
 }
 
 @keyframes spin-slow {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .animate-spin-slow {
@@ -100,8 +123,15 @@ img {
 }
 
 @keyframes pulse-glow {
-  0%, 100% { opacity: 0.4; transform: scale(1); }
-  50% { opacity: 0.85; transform: scale(1.06); }
+  0%,
+  100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.85;
+    transform: scale(1.06);
+  }
 }
 
 .animate-pulse-glow {

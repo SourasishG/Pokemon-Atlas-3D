@@ -1,10 +1,16 @@
-import React from 'react';
-import { motion } from 'motion/react';
-import { Trash2, MoveUp, MoveDown, Shield, Zap } from 'lucide-react';
-import TypeBadge from '../pokemon/TypeBadge';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { motion } from "motion/react";
+import { Trash2, MoveUp, MoveDown, Shield, Zap } from "lucide-react";
+import TypeBadge from "../pokemon/TypeBadge";
+import { Link } from "react-router-dom";
 
-export default function TeamCard({ member, index, totalMembers, onRemove, onMove }) {
+export default function TeamCard({
+  member,
+  index,
+  totalMembers,
+  onRemove,
+  onMove,
+}) {
   if (!member) return null;
 
   return (
@@ -52,7 +58,10 @@ export default function TeamCard({ member, index, totalMembers, onRemove, onMove
       </div>
 
       {/* Member Artwork */}
-      <Link to={`/pokemon/${member.name}`} className="my-2 flex items-center justify-center">
+      <Link
+        to={`/pokemon/${member.name}`}
+        className="my-2 flex items-center justify-center"
+      >
         <img
           src={member.image}
           alt={member.displayName}
@@ -76,9 +85,21 @@ export default function TeamCard({ member, index, totalMembers, onRemove, onMove
 
         {/* BST & Speed summary */}
         <div className="pt-2 border-t border-white/10 flex justify-around text-[10px] font-mono text-slate-300">
-          <div>BST: <strong className="text-cyan-400">{member.totalStats}</strong></div>
-          <div>SPD: <strong className="text-yellow-400">{member.stats.find(s => s.name === 'speed')?.value || 0}</strong></div>
-          <div>ATK: <strong className="text-rose-400">{member.stats.find(s => s.name === 'attack')?.value || 0}</strong></div>
+          <div>
+            BST: <strong className="text-cyan-400">{member.totalStats}</strong>
+          </div>
+          <div>
+            SPD:{" "}
+            <strong className="text-yellow-400">
+              {member.stats.find((s) => s.name === "speed")?.value || 0}
+            </strong>
+          </div>
+          <div>
+            ATK:{" "}
+            <strong className="text-rose-400">
+              {member.stats.find((s) => s.name === "attack")?.value || 0}
+            </strong>
+          </div>
         </div>
       </div>
     </motion.div>

@@ -1,16 +1,16 @@
-import React, { Suspense, lazy } from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import Navbar from './components/layout/Navbar';
-import Footer from './components/layout/Footer';
-import Toast from './components/common/Toast';
+import React, { Suspense, lazy } from "react";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import Navbar from "./components/layout/Navbar";
+import Footer from "./components/layout/Footer";
+import Toast from "./components/common/Toast";
 
 // Code-split pages for high performance and reduced initial bundle weight
-const Home = lazy(() => import('./pages/Home'));
-const Pokedex = lazy(() => import('./pages/Pokedex'));
-const PokemonDetail = lazy(() => import('./pages/PokemonDetail'));
-const TeamBuilder = lazy(() => import('./pages/TeamBuilder'));
-const Compare = lazy(() => import('./pages/Compare'));
-const Favorites = lazy(() => import('./pages/Favorites'));
+const Home = lazy(() => import("./pages/Home"));
+const Pokedex = lazy(() => import("./pages/Pokedex"));
+const PokemonDetail = lazy(() => import("./pages/PokemonDetail"));
+const TeamBuilder = lazy(() => import("./pages/TeamBuilder"));
+const Compare = lazy(() => import("./pages/Compare"));
+const Favorites = lazy(() => import("./pages/Favorites"));
 
 function RouteLoadingFallback() {
   return (
@@ -38,11 +38,17 @@ export default function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/pokedex" element={<Pokedex />} />
-              <Route path="/explorer" element={<Navigate to="/pokedex" replace />} />
+              <Route
+                path="/explorer"
+                element={<Navigate to="/pokedex" replace />}
+              />
               <Route path="/pokemon/:id" element={<PokemonDetail />} />
               <Route path="/pokedex/:id" element={<PokemonDetail />} />
               <Route path="/team" element={<TeamBuilder />} />
-              <Route path="/team-builder" element={<Navigate to="/team" replace />} />
+              <Route
+                path="/team-builder"
+                element={<Navigate to="/team" replace />}
+              />
               <Route path="/compare" element={<Compare />} />
               <Route path="/favorites" element={<Favorites />} />
               <Route path="*" element={<Navigate to="/" replace />} />

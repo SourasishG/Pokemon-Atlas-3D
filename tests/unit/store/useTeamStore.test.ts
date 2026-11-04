@@ -72,4 +72,53 @@ describe('useTeamStore', () => {
     expect(parsed.members.length).toBe(1);
     expect(parsed.members[0].id).toBe(1);
   });
+
+  it('imports valid team JSON correctly', () => {
+    const validJSON = JSON.stringify({
+      teamName: 'Champion League Squad',
+      members: [
+        { id: 25, name: 'pikachu', displayName: 'Pikachu', types: ['electric'], totalStats: 320 },
+        { id: 6, name: 'charizard', displayName: 'Charizard', types: ['fire', 'flying'], totalStats: 534 },
+      ],
+    });
+
+    const res = useTeamStore.getState().importTeamJSON(validJSON);
+    expect(res.success).toBe(true);
+    expect(useTeamStore.getState().teamName).toBe('Champion League Squad');
+    expect(useTeamStore.getState().team.length).toBe(2);
+    expect(useTeamStore.getState().isInTeam(25)).toBe(true);
+    expect(useTeamStore.getState().isInTeam(6)).toBe(true);
+  });
+
+  it('sanitizes imported team: prevents duplicate IDs and enforces max 6 members', () => {
+    const rawJSON = JSON.stringify({
+      teamName: 'Oversized Squad',
+      members: [
+        { id: 1, name: 'mon-1' },
+        { id: 1, name: 'mon-1-dup' },
+        { id: 2, name: 'mon-2' },
+        { id: 3, name: 'mon-3' },
+        { id: 4, name: 'mon-4' },
+        { id: 5, name: 'mon-5' },
+        { id: 6, name: 'mon-6' },
+        { id: 7, name: 'mon-7' },
+      ],
+    });
+
+    const res = useTeamStore.getState().importTeamJSON(rawJSON);
+    expect(res.success).toBe(true);
+    expect(useTeamStore.getState().team.length).toBe(6);
+    expect(useTeamStore.getState().isInTeam(7)).toBe(false);
+  });
+
+  it('rejects malformed or empty JSON gracefully', () => {
+    const badRes1 = useTeamStore.getState().importTeamJSON('');
+    expect(badRes1.success).toBe(false);
+
+    const badRes2 = useTeamStore.getState().importTeamJSON('invalid json {{{');
+    expect(badRes2.success).toBe(false);
+
+    const badRes3 = useTeamStore.getState().importTeamJSON(JSON.stringify({ members: 'not-an-array' }));
+    expect(badRes3.success).toBe(false);
+  });
 });

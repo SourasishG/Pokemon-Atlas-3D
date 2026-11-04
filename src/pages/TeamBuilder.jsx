@@ -1,31 +1,71 @@
-import React, { useState } from 'react';
-import { Shield, Plus, Trash2, Shuffle, Edit3, Sparkles } from 'lucide-react';
-import TeamCard from '../components/team/TeamCard';
-import TeamAnalysis from '../components/team/TeamAnalysis';
-import PokemonSelectModal from '../components/pokemon/PokemonSelectModal';
-import EmptyState from '../components/common/EmptyState';
-import { useTeamStore } from '../store/useTeamStore';
-import { usePokemonStore } from '../store/usePokemonStore';
-import { getPokemon } from '../services/pokeapi';
+import React, { useState, useRef } from "react";
+import {
+  Shield,
+  Plus,
+  Trash2,
+  Shuffle,
+  Edit3,
+  Sparkles,
+  Upload,
+} from "lucide-react";
+import TeamCard from "../components/team/TeamCard";
+import TeamAnalysis from "../components/team/TeamAnalysis";
+import PokemonSelectModal from "../components/pokemon/PokemonSelectModal";
+import EmptyState from "../components/common/EmptyState";
+import { useTeamStore } from "../store/useTeamStore";
+import { usePokemonStore } from "../store/usePokemonStore";
+import { getPokemon } from "../services/pokeapi";
 
-const STARTER_PRESETS = ['charizard', 'greninja', 'lucario', 'gengar', 'garchomp', 'sylveon'];
+const STARTER_PRESETS = [
+  "charizard",
+  "greninja",
+  "lucario",
+  "gengar",
+  "garchomp",
+  "sylveon",
+];
 
 export default function TeamBuilder() {
-  const { teamName, team, setTeamName, addToTeam, removeFromTeam, reorderTeam, clearTeam } =
-    useTeamStore();
+  const {
+    teamName,
+    team,
+    setTeamName,
+    addToTeam,
+    removeFromTeam,
+    reorderTeam,
+    clearTeam,
+    importTeamJSON,
+  } = useTeamStore();
   const { showToast } = usePokemonStore();
 
+  const fileInputRef = useRef(null);
   const [isSelectModalOpen, setIsSelectModalOpen] = useState(false);
   const [isEditingName, setIsEditingName] = useState(false);
   const [tempName, setTempName] = useState(teamName);
   const [loadingRandom, setLoadingRandom] = useState(false);
+
+  const handleImportFile = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const content = event.target?.result;
+      if (typeof content === "string") {
+        const res = importTeamJSON(content);
+        showToast(res.message, res.success ? "success" : "error");
+      }
+    };
+    reader.readAsText(file);
+    e.target.value = "";
+  };
 
   const handleNameSave = (e) => {
     e.preventDefault();
     if (tempName.trim()) {
       setTeamName(tempName.trim());
       setIsEditingName(false);
-      showToast('Team name updated!', 'success');
+      showToast("Team name updated!", "success");
     }
   };
 
@@ -34,12 +74,14 @@ export default function TeamBuilder() {
     clearTeam();
 
     try {
-      const results = await Promise.all(STARTER_PRESETS.map((p) => getPokemon(p)));
+      const results = await Promise.all(
+        STARTER_PRESETS.map((p) => getPokemon(p)),
+      );
       results.filter(Boolean).forEach((p) => addToTeam(p));
-      showToast('Loaded Iconic Starter Squad!', 'success');
+      showToast("Loaded Iconic Starter Squad!", "success");
     } catch (err) {
       console.error(err);
-      showToast('Failed to load starter preset', 'error');
+      showToast("Failed to load starter preset", "error");
     } finally {
       setLoadingRandom(false);
     }
@@ -59,7 +101,10 @@ export default function TeamBuilder() {
 
           {/* Editable Team Name */}
           {isEditingName ? (
-            <form onSubmit={handleNameSave} className="flex items-center gap-2 mt-1">
+            <form
+              onSubmit={handleNameSave}
+              className="flex items-center gap-2 mt-1"
+            >
               <input
                 type="text"
                 value={tempName}
@@ -94,7 +139,24 @@ export default function TeamBuilder() {
         </div>
 
         {/* Top Actions */}
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept=".json,application/json"
+            onChange={handleImportFile}
+            className="hidden"
+            aria-label="Upload squad JSON file"
+          />
+          <button
+            onClick={() => fileInputRef.current?.click()}
+            className="px-4 py-2.5 rounded-xl bg-slate-900 border border-white/10 text-xs font-mono font-bold uppercase text-slate-300 hover:text-cyan-400 flex items-center gap-2 transition-colors"
+            title="Import team from saved JSON"
+          >
+            <Upload className="w-4 h-4 text-cyan-400" />
+            <span>Import JSON</span>
+          </button>
+
           <button
             onClick={handleRandomizeStarters}
             disabled={loadingRandom}
@@ -108,7 +170,7 @@ export default function TeamBuilder() {
             <button
               onClick={() => {
                 clearTeam();
-                showToast('Team cleared', 'info');
+                showToast("Team cleared", "info");
               }}
               className="px-4 py-2.5 rounded-xl bg-rose-500/10 text-rose-400 border border-rose-500/30 text-xs font-mono font-bold uppercase hover:bg-rose-500/20 transition-colors flex items-center gap-2"
             >
@@ -147,7 +209,9 @@ export default function TeamBuilder() {
               <span className="text-[10px] font-mono uppercase tracking-widest text-cyan-400 font-bold">
                 Slot #{team.length + idx + 1}
               </span>
-              <h4 className="text-base font-bold text-white mt-0.5">Add Pokémon to Squad</h4>
+              <h4 className="text-base font-bold text-white mt-0.5">
+                Add Pokémon to Squad
+              </h4>
             </div>
           </button>
         ))}
@@ -162,7 +226,7 @@ export default function TeamBuilder() {
         onClose={() => setIsSelectModalOpen(false)}
         onSelectPokemon={(p) => {
           const res = addToTeam(p);
-          showToast(res.message, res.success ? 'success' : 'error');
+          showToast(res.message, res.success ? "success" : "error");
         }}
         title="Recruit Squad Member"
       />

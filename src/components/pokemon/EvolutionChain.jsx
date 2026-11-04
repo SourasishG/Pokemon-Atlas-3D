@@ -1,12 +1,13 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { ChevronRight } from 'lucide-react';
+import React from "react";
+import { Link } from "react-router-dom";
+import { ChevronRight } from "lucide-react";
 
 export default function EvolutionChain({ chain = [] }) {
   if (!chain || chain.length <= 1) {
     return (
       <div className="p-4 rounded-2xl bg-slate-900/40 border border-white/5 text-slate-400 text-xs text-center font-mono">
-        This Pokémon does not evolve or has a unique standalone evolution structure.
+        This Pokémon does not evolve or has a unique standalone evolution
+        structure.
       </div>
     );
   }
@@ -19,7 +20,7 @@ export default function EvolutionChain({ chain = [] }) {
             <div className="flex flex-col items-center justify-center text-slate-500 my-2">
               <ChevronRight className="w-6 h-6 text-cyan-400 animate-pulse" />
               <span className="text-[10px] font-mono text-slate-400 mt-1 uppercase">
-                {evo.minLevel ? `Lvl ${evo.minLevel}` : evo.trigger || 'Evolve'}
+                {evo.minLevel ? `Lvl ${evo.minLevel}` : evo.trigger || "Evolve"}
               </span>
             </div>
           )}
@@ -40,7 +41,7 @@ export default function EvolutionChain({ chain = [] }) {
               {evo.displayName}
             </span>
             <span className="text-[10px] font-mono text-slate-500">
-              #{String(evo.id).padStart(4, '0')}
+              #{String(evo.id).padStart(4, "0")}
             </span>
           </Link>
         </React.Fragment>

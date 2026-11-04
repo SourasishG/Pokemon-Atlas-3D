@@ -1,5 +1,5 @@
-import React, { forwardRef, Component } from 'react';
-import { Canvas, events } from '@react-three/fiber';
+import React, { forwardRef, Component } from "react";
+import { Canvas, events } from "@react-three/fiber";
 
 export function createSafeEvents(store) {
   const pe = events(store);
@@ -7,13 +7,13 @@ export function createSafeEvents(store) {
   const originalDisconnect = pe.disconnect;
 
   pe.connect = (target) => {
-    if (!target || typeof target.addEventListener !== 'function') {
+    if (!target || typeof target.addEventListener !== "function") {
       return;
     }
     try {
       originalConnect(target);
     } catch (err) {
-      console.warn('Safe connect prevented error:', err);
+      console.warn("Safe connect prevented error:", err);
     }
   };
 
@@ -21,7 +21,7 @@ export function createSafeEvents(store) {
     try {
       originalDisconnect();
     } catch (err) {
-      console.warn('Safe disconnect prevented error:', err);
+      console.warn("Safe disconnect prevented error:", err);
     }
   };
 
@@ -39,7 +39,7 @@ export class CanvasErrorBoundary extends Component {
   }
 
   componentDidCatch(error, errorInfo) {
-    console.warn('WebGL / 3D Canvas error safely caught:', error, errorInfo);
+    console.warn("WebGL / 3D Canvas error safely caught:", error, errorInfo);
   }
 
   render() {
@@ -56,7 +56,8 @@ export class CanvasErrorBoundary extends Component {
             WebGL Acceleration Offline
           </span>
           <p className="text-[11px] text-slate-400 max-w-xs leading-relaxed">
-            Hardware acceleration is inactive or unsupported on this device. Displaying 2D holographic data.
+            Hardware acceleration is inactive or unsupported on this device.
+            Displaying 2D holographic data.
           </p>
         </div>
       );
@@ -65,19 +66,17 @@ export class CanvasErrorBoundary extends Component {
   }
 }
 
-export const SafeCanvas = forwardRef(({ events: customEvents, fallback, children, ...props }, ref) => {
-  return (
-    <CanvasErrorBoundary fallback={fallback}>
-      <Canvas
-        ref={ref}
-        events={customEvents || createSafeEvents}
-        {...props}
-      >
-        {children}
-      </Canvas>
-    </CanvasErrorBoundary>
-  );
-});
+export const SafeCanvas = forwardRef(
+  ({ events: customEvents, fallback, children, ...props }, ref) => {
+    return (
+      <CanvasErrorBoundary fallback={fallback}>
+        <Canvas ref={ref} events={customEvents || createSafeEvents} {...props}>
+          {children}
+        </Canvas>
+      </CanvasErrorBoundary>
+    );
+  },
+);
 
-SafeCanvas.displayName = 'SafeCanvas';
+SafeCanvas.displayName = "SafeCanvas";
 export default SafeCanvas;

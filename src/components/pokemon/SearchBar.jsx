@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { Search, X } from 'lucide-react';
-import { usePokemonStore } from '../../store/usePokemonStore';
+import React, { useState, useEffect } from "react";
+import { Search, X } from "lucide-react";
+import { usePokemonStore } from "../../store/usePokemonStore";
 
 export default function SearchBar() {
   const { searchQuery, setSearchQuery } = usePokemonStore();
@@ -31,8 +31,8 @@ export default function SearchBar() {
       {localQuery && (
         <button
           onClick={() => {
-            setLocalQuery('');
-            setSearchQuery('');
+            setLocalQuery("");
+            setSearchQuery("");
           }}
           className="absolute inset-y-0 right-0 pr-4 flex items-center text-slate-400 hover:text-cyan-400 transition-colors"
           aria-label="Clear search"

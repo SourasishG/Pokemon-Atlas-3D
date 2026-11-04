@@ -1,6 +1,6 @@
 {
   "name": "Pokémon Atlas 3D",
-  "description": "An immersive, responsive, and visually impressive 3D Pokémon exploration, team analysis, and Pokédex platform.",
+  "description": "An immersive, responsive, and visually impressive 3D Pokémon exploration, team analysis, and Pokédex platform powered by Three.js and PokéAPI.",
   "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+  "majorCapabilities": []
 }

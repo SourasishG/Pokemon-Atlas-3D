@@ -1,12 +1,12 @@
-import React, { useRef, useState, useEffect } from 'react';
-import { useFrame } from '@react-three/fiber';
-import { Float, ContactShadows } from '@react-three/drei';
-import SafeCanvas from './SafeCanvas';
-import SafeOrbitControls from './SafeOrbitControls';
-import * as THREE from 'three';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
-import { RotateCcw, Sparkles, Box, Layers, RefreshCw } from 'lucide-react';
-import { getTypeColor } from '../../utils/typeColors';
+import React, { useRef, useState, useEffect } from "react";
+import { useFrame } from "@react-three/fiber";
+import { Float, ContactShadows } from "@react-three/drei";
+import SafeCanvas from "./SafeCanvas";
+import SafeOrbitControls from "./SafeOrbitControls";
+import * as THREE from "three";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
+import { RotateCcw, Sparkles, Box, Layers, RefreshCw } from "lucide-react";
+import { getTypeColor } from "../../utils/typeColors";
 
 // -------------------------------------------------------------
 // Pure 3D Canvas Sub-components
@@ -119,7 +119,7 @@ function HoloStageBase({ typeColor, isShiny }) {
     }));
   }, []);
 
-  const stageColor = isShiny ? '#f59e0b' : typeColor;
+  const stageColor = isShiny ? "#f59e0b" : typeColor;
 
   return (
     <group position={[0, -1.2, 0]}>
@@ -136,9 +136,18 @@ function HoloStageBase({ typeColor, isShiny }) {
       </mesh>
 
       {/* Glowing Outer Ring */}
-      <mesh ref={ringRef} position={[0, 0.02, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+      <mesh
+        ref={ringRef}
+        position={[0, 0.02, 0]}
+        rotation={[-Math.PI / 2, 0, 0]}
+      >
         <ringGeometry args={[1.28, 1.52, 32]} />
-        <meshBasicMaterial color={stageColor} transparent opacity={0.85} side={THREE.DoubleSide} />
+        <meshBasicMaterial
+          color={stageColor}
+          transparent
+          opacity={0.85}
+          side={THREE.DoubleSide}
+        />
       </mesh>
 
       {/* Floating 3D Specular Particles */}
@@ -159,7 +168,13 @@ function HoloStageBase({ typeColor, isShiny }) {
       </group>
 
       {/* Soft Contact Shadow */}
-      <ContactShadows position={[0, -0.22, 0]} opacity={0.65} scale={4.5} blur={2.0} far={2.5} />
+      <ContactShadows
+        position={[0, -0.22, 0]}
+        opacity={0.65}
+        scale={4.5}
+        blur={2.0}
+        far={2.5}
+      />
     </group>
   );
 }
@@ -169,9 +184,22 @@ function StudioLighting({ colorHex, isShiny }) {
     <>
       <ambientLight intensity={1.2} color="#f1f5f9" />
       <directionalLight position={[6, 9, 6]} intensity={2.2} castShadow />
-      <directionalLight position={[-6, 4, -4]} intensity={1.0} color="#06b6d4" />
-      <directionalLight position={[0, -2, -6]} intensity={1.4} color="#38bdf8" />
-      <pointLight position={[0, 2.2, 3]} color={isShiny ? '#fbbf24' : colorHex} intensity={isShiny ? 4.5 : 3.5} distance={10} />
+      <directionalLight
+        position={[-6, 4, -4]}
+        intensity={1.0}
+        color="#06b6d4"
+      />
+      <directionalLight
+        position={[0, -2, -6]}
+        intensity={1.4}
+        color="#38bdf8"
+      />
+      <pointLight
+        position={[0, 2.2, 3]}
+        color={isShiny ? "#fbbf24" : colorHex}
+        intensity={isShiny ? 4.5 : 3.5}
+        distance={10}
+      />
     </>
   );
 }
@@ -182,13 +210,13 @@ function StudioLighting({ colorHex, isShiny }) {
 
 export default function PokemonViewer({ pokemon, isShiny, onToggleShiny }) {
   const controlsRef = useRef();
-  const [viewMode, setViewMode] = useState('mesh'); // 'mesh' | 'sculpture'
+  const [viewMode, setViewMode] = useState("mesh"); // 'mesh' | 'sculpture'
   const [gltfScene, setGltfScene] = useState(null);
   const [texture, setTexture] = useState(null);
   const [loadingGltf, setLoadingGltf] = useState(true);
   const [gltfError, setGltfError] = useState(false);
 
-  const primaryType = pokemon?.types[0]?.name || 'normal';
+  const primaryType = pokemon?.types[0]?.name || "normal";
   const colorInfo = getTypeColor(primaryType);
   const activeImage = isShiny ? pokemon.shinyImage : pokemon.image;
 
@@ -203,7 +231,7 @@ export default function PokemonViewer({ pokemon, isShiny, onToggleShiny }) {
         setTexture(tex);
       },
       undefined,
-      (err) => console.warn('Texture load error:', err)
+      (err) => console.warn("Texture load error:", err),
     );
   }, [activeImage]);
 
@@ -217,7 +245,7 @@ export default function PokemonViewer({ pokemon, isShiny, onToggleShiny }) {
     if (!pokemon?.id) return;
 
     const loader = new GLTFLoader();
-    const paddedId = String(pokemon.id).padStart(3, '0');
+    const paddedId = String(pokemon.id).padStart(3, "0");
 
     const urls = isShiny
       ? [
@@ -270,8 +298,14 @@ export default function PokemonViewer({ pokemon, isShiny, onToggleShiny }) {
               child.receiveShadow = true;
               if (child.material) {
                 child.material.envMapIntensity = 1.2;
-                if (child.material.isMeshStandardMaterial || child.material.isMeshPhysicalMaterial) {
-                  child.material.roughness = Math.max(child.material.roughness || 0.3, 0.2);
+                if (
+                  child.material.isMeshStandardMaterial ||
+                  child.material.isMeshPhysicalMaterial
+                ) {
+                  child.material.roughness = Math.max(
+                    child.material.roughness || 0.3,
+                    0.2,
+                  );
                   child.material.metalness = child.material.metalness || 0.1;
                 }
                 child.material.needsUpdate = true;
@@ -283,7 +317,7 @@ export default function PokemonViewer({ pokemon, isShiny, onToggleShiny }) {
           setLoadingGltf(false);
         },
         undefined,
-        () => tryLoadNext()
+        () => tryLoadNext(),
       );
     }
 
@@ -300,7 +334,7 @@ export default function PokemonViewer({ pokemon, isShiny, onToggleShiny }) {
     }
   };
 
-  const isMeshActive = viewMode === 'mesh' && !gltfError && gltfScene;
+  const isMeshActive = viewMode === "mesh" && !gltfError && gltfScene;
 
   return (
     <div className="relative w-full h-[400px] sm:h-[480px] glass-panel rounded-3xl border border-white/10 overflow-hidden flex flex-col justify-between p-4 shadow-[0_0_50px_rgba(6,182,212,0.15)] transition-all">
@@ -315,11 +349,11 @@ export default function PokemonViewer({ pokemon, isShiny, onToggleShiny }) {
         <div className="flex items-center gap-2">
           <div className="flex items-center p-1 rounded-2xl bg-slate-900/90 border border-white/10 font-mono text-[11px] shadow-lg">
             <button
-              onClick={() => setViewMode('mesh')}
+              onClick={() => setViewMode("mesh")}
               className={`px-3 py-1.5 rounded-xl font-bold uppercase transition-all flex items-center gap-1.5 ${
-                viewMode === 'mesh' && !gltfError
-                  ? 'bg-cyan-500 text-slate-950 shadow-[0_0_12px_rgba(6,182,212,0.4)]'
-                  : 'text-slate-400 hover:text-white'
+                viewMode === "mesh" && !gltfError
+                  ? "bg-cyan-500 text-slate-950 shadow-[0_0_12px_rgba(6,182,212,0.4)]"
+                  : "text-slate-400 hover:text-white"
               }`}
             >
               <Box className="w-3.5 h-3.5" />
@@ -327,11 +361,11 @@ export default function PokemonViewer({ pokemon, isShiny, onToggleShiny }) {
             </button>
 
             <button
-              onClick={() => setViewMode('sculpture')}
+              onClick={() => setViewMode("sculpture")}
               className={`px-3 py-1.5 rounded-xl font-bold uppercase transition-all flex items-center gap-1.5 ${
-                viewMode === 'sculpture' || gltfError
-                  ? 'bg-cyan-500 text-slate-950 shadow-[0_0_12px_rgba(6,182,212,0.4)]'
-                  : 'text-slate-400 hover:text-white'
+                viewMode === "sculpture" || gltfError
+                  ? "bg-cyan-500 text-slate-950 shadow-[0_0_12px_rgba(6,182,212,0.4)]"
+                  : "text-slate-400 hover:text-white"
               }`}
             >
               <Layers className="w-3.5 h-3.5" />
@@ -346,12 +380,12 @@ export default function PokemonViewer({ pokemon, isShiny, onToggleShiny }) {
             onClick={onToggleShiny}
             className={`px-3 py-1.5 rounded-xl border text-xs font-mono uppercase font-bold flex items-center gap-1.5 transition-all shadow-md ${
               isShiny
-                ? 'bg-amber-500/20 text-amber-300 border-amber-500/40 shadow-[0_0_15px_rgba(245,158,11,0.3)]'
-                : 'bg-slate-900/80 text-slate-300 border-white/10 hover:text-white'
+                ? "bg-amber-500/20 text-amber-300 border-amber-500/40 shadow-[0_0_15px_rgba(245,158,11,0.3)]"
+                : "bg-slate-900/80 text-slate-300 border-white/10 hover:text-white"
             }`}
           >
             <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-            <span>{isShiny ? 'Shiny' : 'Normal'}</span>
+            <span>{isShiny ? "Shiny" : "Normal"}</span>
           </button>
 
           {/* Reset Camera Button */}
@@ -366,7 +400,7 @@ export default function PokemonViewer({ pokemon, isShiny, onToggleShiny }) {
       </div>
 
       {/* Loading Overlay */}
-      {viewMode === 'mesh' && loadingGltf && (
+      {viewMode === "mesh" && loadingGltf && (
         <div className="absolute inset-0 z-20 flex flex-col items-center justify-center bg-slate-950/60 backdrop-blur-sm pointer-events-none transition-opacity duration-300">
           <div className="flex items-center gap-2.5 px-4 py-2.5 rounded-2xl bg-slate-900/90 border border-cyan-500/40 text-cyan-400 font-mono text-xs shadow-[0_0_25px_rgba(6,182,212,0.3)]">
             <RefreshCw className="w-4 h-4 animate-spin text-cyan-400" />
@@ -387,7 +421,10 @@ export default function PokemonViewer({ pokemon, isShiny, onToggleShiny }) {
             </Float>
           ) : (
             <Float speed={2} rotationIntensity={0.2} floatIntensity={0.4}>
-              <Volumetric3DStatueMesh texture={texture} typeColor={colorInfo.hex} />
+              <Volumetric3DStatueMesh
+                texture={texture}
+                typeColor={colorInfo.hex}
+              />
             </Float>
           )}
 
@@ -408,12 +445,16 @@ export default function PokemonViewer({ pokemon, isShiny, onToggleShiny }) {
 
       {/* Bottom Status Footer */}
       <div className="relative z-10 mt-auto flex items-center justify-between text-[10px] font-mono text-slate-300 bg-slate-950/80 p-2.5 rounded-2xl border border-white/10 backdrop-blur-md">
-        <span className="hidden sm:inline">3D CONTROLS: Drag to rotate 360° // Scroll to zoom</span>
+        <span className="hidden sm:inline">
+          3D CONTROLS: Drag to rotate 360° // Scroll to zoom
+        </span>
         <span className="sm:hidden">3D: Drag to rotate // Pinch to zoom</span>
         <div className="flex items-center gap-2">
-          <span className="text-cyan-400 font-extrabold uppercase">{pokemon.displayName}</span>
+          <span className="text-cyan-400 font-extrabold uppercase">
+            {pokemon.displayName}
+          </span>
           <span className="px-2 py-0.5 rounded bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 text-[9px]">
-            {isMeshActive ? 'GLTF 3D MESH' : '3D HOLOGRAM'}
+            {isMeshActive ? "GLTF 3D MESH" : "3D HOLOGRAM"}
           </span>
         </div>
       </div>
