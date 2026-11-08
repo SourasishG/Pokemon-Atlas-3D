@@ -48,7 +48,7 @@ export class CanvasErrorBoundary extends Component {
         return this.props.fallback;
       }
       return (
-        <div className="w-full h-full min-h-[280px] flex flex-col items-center justify-center p-6 text-center bg-slate-950/70 rounded-2xl border border-white/10 font-mono">
+        <div className="w-full h-full min-h-70 flex flex-col items-center justify-center p-6 text-center bg-slate-950/70 rounded-2xl border border-white/10 font-mono">
           <div className="w-10 h-10 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 mb-2">
             <span className="text-base font-bold">3D</span>
           </div>
